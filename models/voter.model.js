@@ -2,38 +2,45 @@ const mongoose = require("mongoose");
 
 const voterSchema = new mongoose.Schema(
   {
-    name:{
-        type:String,
-        required:[true,"Name is required"],
-        unique:true,
+    name: {
+      type: String,
+      required: true,
     },
-    age:{
-        type:Number,
-        required:true,
+    age: {
+      type: Number,
+      required: true,
     },
-    gender:{
-        type:String,
-        required:true,
-        enum:["Male","Female"],
-
+    email: {
+      type: String,
     },
-    password:{
-        type:String,
-        required:[true,"Password is required"],
-        
+    mobile: {
+      type: String,
     },
-    aadharNumber:{
-        type:Number,
-        required:[true,"aadharNumber is required"],
-        unique:true,
+    address: {
+      type: String,
+      required: true,
     },
-    candidateId:{
-        type:mongoose.Types.ObjectId,
-        ref:"candidate",
-    }
+    aadharCardNumber: {
+      type: Number,
+      required: true,
+      unqiue: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      enum: ["voter", "admin"],
+      default: "voter",
+    },
+    isVoted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
 
 const voter = mongoose.model("voter", voterSchema);
-module.exports = voter; 
+module.exports = voter;
