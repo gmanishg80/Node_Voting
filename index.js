@@ -13,6 +13,8 @@ app.use(express.json());
 const voterRoute = require("./routes/voter.route");
 const candidateRoute = require("./routes/candidate.route");
 
+
+
 // Use the routers
 app.use('/voter', voterRoute);
 app.use('/candidate', candidateRoute);
