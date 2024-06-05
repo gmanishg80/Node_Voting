@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const candidate = require('../models/candidate-model');
+const candidateController = require("../controllers/candidate.controller");
 
+// router.post("/signup",candidateController);
 
 
 

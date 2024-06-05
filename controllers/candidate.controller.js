@@ -1,0 +1,1 @@
+const candidate = require("../models/candidate-model");
