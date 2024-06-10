@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const voterController = require("../controllers/voter.controller");
-
-// router.post("/signup", voterController);
+const { signup } = require("../controllers/voter.controller"); // Destructure the signup function
 
 
+router.post("/signup", signup); // Use the signup function directly
 
-
-module.exports=router;
- 
+module.exports = router;

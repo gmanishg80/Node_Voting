@@ -1,7 +1,7 @@
 const { body } = require('express-validator');
 
-const validateVoter = () => {
-  return [
+const validateVoter = 
+ [
     body('name')
       .notEmpty().withMessage('Name is required')
       .isString().withMessage('Name must be a string'),
@@ -16,7 +16,7 @@ const validateVoter = () => {
 
     body('mobile')
       .optional()
-      .isString().withMessage('Mobile number must be a string'),
+      .isString().withMessage('M obile number must be a string'),
 
     body('address')
       .notEmpty().withMessage('Address is required')
@@ -36,8 +36,16 @@ const validateVoter = () => {
       .isIn(['voter', 'admin']).withMessage('Role must be either "voter" or "admin"'),
 
   ];
-};
 
 module.exports = {
   validateVoter,
 };
+
+
+
+
+
+
+
+
+

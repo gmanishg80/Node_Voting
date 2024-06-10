@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const voterSchema = new mongoose.Schema(
   {
@@ -41,6 +42,38 @@ const voterSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+
+voterSchema.pre('save', async function(next){
+  const voter = this;
+
+  // Hash the password only if it has been modified (or is new)
+  if(!voter.isModified('password')) return next();
+  try{
+      // hash password generation
+      const salt = await bcrypt.genSalt(10);
+
+      // hash password
+      const hashedPassword = await bcrypt.hash(voter.password, salt);
+      
+      // Override the plain password with the hashed one
+      voter.password = hashedPassword;
+      next();
+  }catch(err){
+      return next(err);
+  }
+})
+
+voterSchema.methods.comparePassword = async function(voterPassword){
+  try{
+      // Use bcrypt to compare the provided password with the hashed password
+      const isMatch = await bcrypt.compare(voterPassword, this.password);
+      return isMatch;
+  }catch(err){
+      throw err;
+  }
+}
+
 
 const voter = mongoose.model("voter", voterSchema);
 module.exports = voter;
