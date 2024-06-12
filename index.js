@@ -8,6 +8,7 @@ const colors = require("colors");
 require('dotenv').config();
 
 app.use(express.json());
+app.use(express.urlencoded({extended: true, limit: "16kb"}))
 
 // Import the router files
 const voterRoute = require("./routes/voter.route");
