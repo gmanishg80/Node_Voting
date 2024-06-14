@@ -1,9 +1,9 @@
 const Voter = require("../models/voter.model");
-const { validateVoter } = require("../validations/validateVoter");
+const { validateVoter } = require("../Helper/validateVoter");
 const { validationResult } = require("express-validator");
-const { generateToken, jwtAuthMiddleware } = require("../validations/jwt");
-const responses = require("../validations/responses");
-const { uploadFile } = require("../cloudnary");
+const { generateToken, jwtAuthMiddleware } = require("../Helper/jwt");
+const responses = require("../Helper/responses");
+const { uploadFile } = require("../utils/cloudnary");
 
 const signup = [
   validateVoter,
@@ -14,12 +14,25 @@ const signup = [
         return responses.badRequest(res, errors.array());
       }
 
-      const { name, age, email, mobile, address, aadharCardNumber, password, role, isVoted } = req.body;
+      const {
+        name,
+        age,
+        email,
+        mobile,
+        address,
+        aadharCardNumber,
+        password,
+        role,
+        isVoted,
+      } = req.body;
 
       // Check if a Voter with the same Aadhar Card Number already exists
       const existingVoter = await Voter.findOne({ aadharCardNumber });
       if (existingVoter) {
-        return responses.badRequest(res, "Voter with the same Aadhar Card Number already exists");
+        return responses.badRequest(
+          res,
+          "Voter with the same Aadhar Card Number already exists"
+        );
       }
 
       // Profile image upload
@@ -53,7 +66,11 @@ const signup = [
       console.log(JSON.stringify(payload));
       const token = generateToken(payload);
 
-      responses.created(res, { voter: savedVoterData, token }, "Voter registered successfully");
+      responses.created(
+        res,
+        { voter: savedVoterData, token },
+        "Voter registered successfully"
+      );
     } catch (error) {
       console.error(error);
       responses.serverError(res, "Internal Server Error");
